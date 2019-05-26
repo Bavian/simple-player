@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">SimplePlayer</string>
+    <string name="question_on_start">Откуда играть музыку?</string>
+    <string name="tip_on_start">Выберите папку с аудиозаписями</string>
+    <string name="choose_directory_button">Выбрать папку</string>
+    <string name="done_description">done</string>
+    <string name="album_description">album</string>
+    <string name="add_description">add</string>
+    <string name="explicit_description">explicit</string>
+    <string name="menu_description">menu</string>
+    <string name="previous_description">previous composition</string>
+    <string name="play_description">play</string>
+    <string name="pause_description">pause</string>
+    <string name="next_description">next composition</string>
+    <string name="shuffle_description">shuffle</string>
+    <string name="repeat_description">repeat</string>
+</resources>

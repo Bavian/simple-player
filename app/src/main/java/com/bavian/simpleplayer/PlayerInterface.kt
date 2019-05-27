@@ -5,6 +5,7 @@ import android.media.MediaMetadataRetriever
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.GestureDetector
 import android.view.View
 import android.widget.ImageButton
@@ -12,8 +13,7 @@ import android.widget.SeekBar
 import java.io.File
 import android.widget.TextView
 import android.view.View.OnTouchListener
-
-
+import android.widget.Toast
 
 
 class PlayerInterface : AppCompatActivity() {
@@ -43,6 +43,14 @@ class PlayerInterface : AppCompatActivity() {
                 paths.add(file.absolutePath)
             }
 
+        }
+
+        if (paths.size == 0) {
+
+            Toast.makeText(applicationContext, "В данной директории нет .mp3 файлов", Toast.LENGTH_SHORT).show()
+
+            onBackPressed()
+            return
         }
 
         compositionsPaths = paths

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.view.View
@@ -14,13 +15,13 @@ import android.widget.ListView
 import java.io.File
 
 const val EXTERNAL_STORAGE = 1
-const val ROOT = "/"
+val ROOT: File = Environment.getExternalStorageDirectory()
 
 class DirectoryChooser : AppCompatActivity() {
 
     private var listView : ListView? = null
     private var currentFile : File? = null
-    private var currentAbsolutePaths : ArrayList<String>? = null
+    private var currentFiles : ArrayList<File>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -29,12 +30,10 @@ class DirectoryChooser : AppCompatActivity() {
 
         listView = this.findViewById(R.id.directories)
 
-        val _listView = listView
+        val lv = listView
 
-        _listView!!.onItemClickListener = AdapterView.OnItemClickListener { adapterView: AdapterView<*>, view1: View, i: Int, l: Long ->
-
-            browseTo(currentAbsolutePaths!!.get(i))
-
+        lv!!.onItemClickListener = AdapterView.OnItemClickListener { adapterView: AdapterView<*>, view1: View, i: Int, l: Long ->
+            browseTo(currentFiles!![i])
         }
 
         if (ContextCompat.checkSelfPermission(
@@ -79,24 +78,27 @@ class DirectoryChooser : AppCompatActivity() {
 
 
     private fun browseTo(fileName : String) {
+        browseTo(File(fileName))
+    }
 
-        val currentFile = File(fileName)
-        this.currentFile = currentFile
+    private fun browseTo(fileToBrowse: File) {
 
-        val files = currentFile.listFiles()
+        this.currentFile = fileToBrowse
+
+        val files = fileToBrowse.listFiles()
         val directories = ArrayList<String>()
-        currentAbsolutePaths = ArrayList()
+        currentFiles = ArrayList()
 
-        if (currentFile.parent != null) {
+        if (fileToBrowse.parent != null && fileToBrowse != ROOT) {
             directories.add("..")
-            currentAbsolutePaths!!.add(currentFile.parentFile.absolutePath)
+            currentFiles!!.add(fileToBrowse.parentFile)
         }
 
         for ( file in files ) {
 
-            if (file.isDirectory) {
-                directories.add(file.canonicalPath)
-                currentAbsolutePaths!!.add(file.absolutePath)
+            if (file.isDirectory && !file.isHidden) {
+                directories.add(file.absolutePath.substring(file.absolutePath.lastIndexOf('/') + 1))
+                currentFiles!!.add(file)
             }
 
         }

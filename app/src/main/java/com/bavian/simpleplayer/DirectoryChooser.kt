@@ -115,4 +115,14 @@ class DirectoryChooser : AppCompatActivity() {
         startActivity(intent)
     }
 
+    override fun onBackPressed() {
+
+        if (currentFile == ROOT) {
+            super.onBackPressed()
+        } else {
+            browseTo(currentFiles!![0])
+        }
+
+    }
+
 }

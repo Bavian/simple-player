@@ -21,6 +21,7 @@
         <activity android:name=".DirectoryChooser"/>
         <activity android:name=".PlayerInterface"/>
         <service android:name=".Player"/>
+        <service android:name=".MusicService"/>
     </application>
 
 </manifest>

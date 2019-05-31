@@ -10,6 +10,11 @@ class LocalCompositionsList(path: String): CompositionsList {
         return compositions[index].absolutePath
     }
 
+    override val size: Int
+        get() {
+            return compositions.size
+        }
+
     private fun getFileExtension(file: File): String {
 
         val name = file.name

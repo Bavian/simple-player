@@ -77,4 +77,10 @@ class Player(private var compositions: CompositionsList) {
             }
         }
 
+    public fun off() {
+        synchronized(mediaPlayer) {
+            mediaPlayer.release()
+        }
+    }
+
 }

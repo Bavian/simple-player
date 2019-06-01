@@ -2,30 +2,21 @@ package com.bavian.simpleplayer.player.compositions
 
 import java.io.File
 
-class LocalCompositionsList(path: String): CompositionsList {
+class LocalCompositionsList(paths: Array<String>): CompositionsList {
 
-    private val compositions = File(path).listFiles { file -> getFileExtension(file) == ".mp3" }
+    private val compositions = ArrayList<String>()
+
+    init {
+        compositions.addAll(paths)
+    }
 
     override fun get(index: Int): String {
-        return compositions[index].absolutePath
+        return compositions[index]
     }
 
     override val size: Int
         get() {
             return compositions.size
         }
-
-    private fun getFileExtension(file: File): String {
-
-        val name = file.name
-        val lastIndexOf = name.lastIndexOf(".")
-
-        return if (lastIndexOf == -1) {
-            ""
-        } else {
-            name.substring(lastIndexOf)
-        }
-
-    }
 
 }

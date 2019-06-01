@@ -1,225 +1,153 @@
 package com.bavian.simpleplayer
 
 import android.content.Intent
-import android.media.MediaMetadataRetriever
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
-import android.view.GestureDetector
 import android.view.View
 import android.widget.ImageButton
 import android.widget.SeekBar
-import java.io.File
 import android.widget.TextView
-import android.view.View.OnTouchListener
-import android.widget.Toast
-
 
 class PlayerInterface : AppCompatActivity() {
 
-    companion object {
-        private var compositionNumber : Int = 0
-    }
-
-    private var serviceIntent : Intent? = null
-    private var compositionsPaths : ArrayList<String>? = null
-
     private var timerHandler: Handler? = null
     private var timerUpdater: Runnable? = null
+    private var hasStopped = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val paths = intent?.extras?.getStringArray("paths")
+
+        val intent = Intent(this, MusicService::class.java)
+        intent.putExtra("paths", paths)
+        startService(intent)
+
         setContentView(R.layout.player)
 
-        val extras = intent.extras
+        if (MusicService.player?.isPlaying() != true && savedInstanceState != null) {
+            findViewById<ImageButton>(R.id.play).setImageResource(R.drawable.ic_play_48)
+        }
 
-        val directory = File(extras.getString("path"))
-        val paths = ArrayList<String>()
+    }
 
-        for (file in directory.listFiles()) {
+    override fun onStart() {
+        super.onStart()
 
-            if (getFileExtension(file).equals(".mp3")) {
-                paths.add(file.absolutePath)
+        launchSeekBarAnalyser()
+        launchSeekBarListener()
+
+        if (hasStopped) {
+
+            val button = findViewById<ImageButton>(R.id.play)
+
+            if (MusicService.player?.isPlaying() != true) {
+                button.setImageResource(R.drawable.ic_play_48)
+            } else {
+                button.setImageResource(R.drawable.ic_pause_48)
             }
 
         }
 
-        if (paths.size == 0) {
+        hasStopped = false
 
-            Toast.makeText(applicationContext, "В данной директории нет .mp3 файлов", Toast.LENGTH_SHORT).show()
+    }
 
-            onBackPressed()
-            return
+    override fun onStop() {
+        super.onStop()
+        hasStopped = true
+        timerHandler?.removeCallbacks(timerUpdater)
+    }
+
+    fun play(view: View) {
+
+        val button = findViewById<ImageButton>(R.id.play)
+
+        if (MusicService.player!!.isPlaying()) {
+
+            button.setImageResource(R.drawable.ic_play_48)
+            MusicService.player!!.pause()
+
+        } else {
+
+            button.setImageResource(R.drawable.ic_pause_48)
+            MusicService.player!!.play()
+
         }
 
-        compositionsPaths = paths
+    }
 
-        val time = savedInstanceState?.getInt("time", 0) ?: 0
-        turnOn(compositionNumber, true, time)
+    fun next(view: View) = MusicService.player!!.next()
+    fun previous(view: View) = MusicService.player!!.previous()
+
+    private fun launchSeekBarAnalyser() {
 
         val seekBar = findViewById<SeekBar>(R.id.timer)
         val leftTimer = findViewById<TextView>(R.id.current_time)
         val rightTimer = findViewById<TextView>(R.id.rest_time)
 
+        val name = findViewById<TextView>(R.id.name)
+        val author = findViewById<TextView>(R.id.author)
+
         val timerHandler = Handler()
         val timerUpdater = object : Runnable {
 
             override fun run() {
-                seekBar.max = Player.getDuration()
+                seekBar.max = MusicService.player?.duration ?: 0
+                val progress = MusicService.player?.progress
+                val duration = MusicService.player?.duration
 
-                val progress = Player.getProgress()
-                val duration = Player.getDuration()
+                val restTime = "-${getTimer(duration?.minus(progress ?: 0))}"
 
-                val restTime = "-${getTimer(duration - progress)}"
-
-                seekBar.progress = progress
+                seekBar.progress = progress ?: 0
                 leftTimer.text = getTimer(progress)
                 rightTimer.text = restTime
 
-                if (progress >= duration) {
-                    next(null)
-                }
+                name.text = MusicService.player?.currentCompositionName ?: "Unknown"
+                author.text = MusicService.player?.currentCompositionAuthor ?: "Anonymous"
 
                 timerHandler.postDelayed(this, 1000)
             }
 
         }
 
+        timerHandler.postDelayed(timerUpdater, 0)
+
         this.timerHandler = timerHandler
         this.timerUpdater = timerUpdater
 
+    }
+
+    private fun launchSeekBarListener() {
+        val seekBar = findViewById<SeekBar>(R.id.timer)
+
         seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
 
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-            }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-            }
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
 
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 if (fromUser) {
-                    Player.seekTo(seekBar!!.progress)
+                    MusicService.player?.progress = progress
                 }
             }
 
         })
-
-        val gdt = GestureDetector(GestureListener(fun() {
-            moveTaskToBack(true)
-        }))
-
-        val touchingView = findViewById<View>(R.id.main)
-        touchingView.setOnTouchListener(OnTouchListener { _, event ->
-            gdt.onTouchEvent(event)
-            true
-        })
     }
 
-    override fun onStart() {
-        super.onStart()
-        timerHandler!!.postDelayed(timerUpdater, 0)
-    }
+    fun getTimer(time: Int?): String {
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putInt("time", min(Player.getProgress() + 250, Player.getDuration()))
-    }
-
-    private fun turnOff() {
-        Player.pause()
-        findViewById<ImageButton>(R.id.play).setImageResource(R.drawable.ic_play_48)
-    }
-
-    private fun turnOn(number: Int, isNew: Boolean = false, time: Int = 0) {
-        compositionNumber = number
-
-        if (isNew) {
-
-            turnOnPlayer(compositionsPaths!![number], time)
-
-        } else {
-            Player.start()
+        if (time == null) {
+            return "0:00"
         }
 
-        findViewById<ImageButton>(R.id.play).setImageResource(R.drawable.ic_pause_48)
+        val seconds = time / 1000 % 60
+        val minutes = time / 1000 / 60
 
+        val secondsString = if (seconds < 10) "0$seconds" else seconds.toString()
+
+        return "$minutes:$secondsString"
     }
 
-    private fun turnOnPlayer(composition: String, time: Int) {
-
-        if (serviceIntent != null) {
-            stopService(serviceIntent)
-        }
-
-        val newIntent = Intent(this, Player::class.java)
-        newIntent.addCategory("player")
-        newIntent.putExtra("composition", composition)
-
-        Player.timeToSeek = time
-
-        val mmr = MediaMetadataRetriever()
-        mmr.setDataSource(composition)
-
-        findViewById<TextView>(R.id.name).text = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE)
-        findViewById<TextView>(R.id.author).text = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST)
-
-        stopService(newIntent)
-        startService(newIntent)
-        serviceIntent = newIntent
-    }
-
-    fun play(view: View) {
-
-        if(serviceIntent == null) {
-            turnOn(compositionNumber, true)
-        }
-
-        if (Player.isPlaying()) {
-            turnOff()
-        } else {
-            turnOn(compositionNumber)
-        }
-
-    }
-
-    fun next(view: View?) {
-        turnOn((compositionNumber + 1) % compositionsPaths!!.size, true)
-    }
-
-    fun previous(view: View) {
-        turnOn((compositionsPaths!!.size + compositionNumber - 1) % compositionsPaths!!.size, true)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        timerHandler!!.removeCallbacks(timerUpdater)
-    }
-
-}
-
-fun getFileExtension(file: File): String {
-
-    val name = file.name
-    val lastIndexOf = name.lastIndexOf(".")
-
-    return if (lastIndexOf == -1) {
-        ""
-    } else {
-        name.substring(lastIndexOf)
-    }
-
-}
-
-fun getTimer(time: Int): String {
-    val seconds = time / 1000 % 60
-    val minutes = time / 1000 / 60
-
-    val secondsString = if (seconds < 10) "0$seconds" else seconds.toString()
-
-    return "$minutes:$secondsString"
-}
-
-fun min(a: Int, b: Int): Int {
-    return if (a < b) a else b
 }

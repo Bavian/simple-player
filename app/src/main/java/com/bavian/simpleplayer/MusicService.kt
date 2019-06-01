@@ -11,7 +11,6 @@ class MusicService: Service() {
     companion object {
         var player: Player? = null
             private set
-
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -19,7 +18,8 @@ class MusicService: Service() {
         val result = super.onStartCommand(intent, flags, startId)
 
         if (player == null) {
-            player = Player(LocalCompositionsList(intent!!.extras!!.getString("path")!!))
+            player = Player(LocalCompositionsList(intent!!.extras!!.getStringArray("paths")!!))
+            player!!.play(0)
         }
 
         return result

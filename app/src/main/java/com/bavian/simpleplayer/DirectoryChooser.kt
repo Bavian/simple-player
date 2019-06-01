@@ -12,6 +12,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListView
+import android.widget.Toast
 import java.io.File
 
 const val EXTERNAL_STORAGE = 1
@@ -110,9 +111,33 @@ class DirectoryChooser : AppCompatActivity() {
 
     fun done(view: View) {
         intent = Intent(this, PlayerInterface::class.java)
-        intent.putExtra("path", currentFile!!.absolutePath)
 
-        startActivity(intent)
+        val files = currentFile!!.listFiles { file -> getFileExtension(file) == ".mp3"}
+
+        if (files.isEmpty()) {
+            Toast.makeText(applicationContext, "В данной директории нет .mp3 файлов", Toast.LENGTH_SHORT).show()
+        } else {
+
+            var i = 0
+            val filePaths = Array<String>(files.size) {files[i++].absolutePath}
+
+            intent.putExtra("paths", filePaths)
+            startActivity(intent)
+        }
+
+    }
+
+    private fun getFileExtension(file: File): String {
+
+        val name = file.name
+        val lastIndexOf = name.lastIndexOf(".")
+
+        return if (lastIndexOf == -1) {
+            ""
+        } else {
+            name.substring(lastIndexOf)
+        }
+
     }
 
     override fun onBackPressed() {

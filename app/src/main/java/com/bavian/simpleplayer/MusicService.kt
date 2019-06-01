@@ -4,7 +4,7 @@ import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 import com.bavian.simpleplayer.player.Player
-import com.bavian.simpleplayer.player.compositions.LocalCompositionsList
+import com.bavian.simpleplayer.player.compositions.CompositionsList
 
 class MusicService: Service() {
 
@@ -17,7 +17,7 @@ class MusicService: Service() {
 
         val result = super.onStartCommand(intent, flags, startId)
 
-        val list = LocalCompositionsList(intent!!.extras!!.getStringArray("paths")!!)
+        val list = CompositionsList(intent!!.extras!!.getStringArray("paths")!!)
 
         if (player == null) {
             player = Player(list)

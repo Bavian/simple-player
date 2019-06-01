@@ -6,7 +6,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MainActivity"
-        android:id="@+id/main">
+        android:id="@+id/main"
+        android:background="@color/light_grey">
 
     <LinearLayout
             android:layout_width="wrap_content"
@@ -32,6 +33,7 @@
                 android:text="@string/tip_on_start"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
+                android:textSize="14sp"
         />
 
         <Button
@@ -46,6 +48,63 @@
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
                 android:onClick="chooseDirectory"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:id="@+id/player"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:background="@color/white"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+                android:id="@+id/album"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_margin="10dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/album"
+                android:contentDescription="@string/album_description"
+                android:background="@drawable/button_background"/>
+
+        <TextView
+                android:id="@+id/name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="25"
+                android:layout_gravity="center_vertical"
+                android:textSize="26sp"
+                android:textColor="@color/black"/>
+
+        <TextView
+                android:id="@+id/rest_time"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="8"
+                android:layout_gravity="center_vertical"
+                android:textSize="14sp"/>
+
+        <ImageButton
+                android:id="@+id/pause"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="10"
+                android:src="@drawable/ic_pause_28"
+                android:contentDescription="@string/pause_description"
+                android:background="@color/white"/>
+
+        <ImageButton
+                android:id="@+id/skip_next"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="10"
+                android:src="@drawable/ic_mini_player_next_28"
+                android:contentDescription="@string/next_description"
+                android:background="@color/white"/>
 
     </LinearLayout>
 

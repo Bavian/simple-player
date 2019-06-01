@@ -4,6 +4,7 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.view.GestureDetector
 import android.view.View
 import android.widget.ImageButton
 import android.widget.SeekBar
@@ -29,6 +30,8 @@ class PlayerInterface : AppCompatActivity() {
         if (MusicService.player?.isPlaying() != true && savedInstanceState != null) {
             findViewById<ImageButton>(R.id.play).setImageResource(R.drawable.ic_play_48)
         }
+
+        launchGestureListener()
 
     }
 
@@ -134,6 +137,16 @@ class PlayerInterface : AppCompatActivity() {
             }
 
         })
+    }
+
+    private fun launchGestureListener() {
+        val gdt = GestureDetector(this, GestureListener { moveTaskToBack(true) })
+
+        val touchingView = findViewById<View>(R.id.main)
+        touchingView.setOnTouchListener { _, event ->
+            gdt.onTouchEvent(event)
+            true
+        }
     }
 
     fun getTimer(time: Int?): String {

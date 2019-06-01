@@ -25,9 +25,12 @@ class DirectoryChooser : AppCompatActivity() {
     private var currentFiles : ArrayList<File>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.choose_directory)
+    }
+
+    override fun onStart() {
+        super.onStart()
 
         listView = this.findViewById(R.id.directories)
 
@@ -53,7 +56,6 @@ class DirectoryChooser : AppCompatActivity() {
         } else {
             browseTo(ROOT)
         }
-
     }
 
     override fun onRequestPermissionsResult(requestCode: Int,

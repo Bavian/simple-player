@@ -5,7 +5,7 @@ import android.media.MediaPlayer
 import com.bavian.simpleplayer.player.compositions.CompositionsList
 import kotlin.random.Random
 
-class Player(private var compositions: CompositionsList) {
+class Player(compositions: CompositionsList) {
 
     private val mediaPlayer = MediaPlayer()
     private val data = MediaMetadataRetriever()
@@ -15,6 +15,14 @@ class Player(private var compositions: CompositionsList) {
 
     var duration: Int = 0
         private set
+
+    var compositions: CompositionsList = compositions
+        set(toSet) {
+            if (compositions < toSet) {
+                field = toSet
+                play(0)
+            }
+        }
 
     init {
         synchronized(mediaPlayer) {

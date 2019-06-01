@@ -17,9 +17,13 @@ class MusicService: Service() {
 
         val result = super.onStartCommand(intent, flags, startId)
 
+        val list = LocalCompositionsList(intent!!.extras!!.getStringArray("paths")!!)
+
         if (player == null) {
-            player = Player(LocalCompositionsList(intent!!.extras!!.getStringArray("paths")!!))
+            player = Player(list)
             player!!.play(0)
+        } else {
+            player!!.compositions = list
         }
 
         return result

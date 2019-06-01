@@ -33,7 +33,7 @@ class DirectoryChooser : AppCompatActivity() {
 
         val lv = listView
 
-        lv!!.onItemClickListener = AdapterView.OnItemClickListener { adapterView: AdapterView<*>, view1: View, i: Int, l: Long ->
+        lv!!.onItemClickListener = AdapterView.OnItemClickListener { _: AdapterView<*>, _: View, i: Int, _: Long ->
             browseTo(currentFiles!![i])
         }
 
@@ -75,11 +75,6 @@ class DirectoryChooser : AppCompatActivity() {
                 // Ignore all other requests.
             }
         }
-    }
-
-
-    private fun browseTo(fileName : String) {
-        browseTo(File(fileName))
     }
 
     private fun browseTo(fileToBrowse: File) {

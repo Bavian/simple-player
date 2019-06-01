@@ -1,7 +1,5 @@
 package com.bavian.simpleplayer.player.compositions
 
-import java.io.File
-
 class LocalCompositionsList(paths: Array<String>): CompositionsList {
 
     private val compositions = ArrayList<String>()

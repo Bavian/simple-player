@@ -60,26 +60,25 @@
             android:background="@drawable/ic_add_outline_24"
             android:backgroundTint="@color/main"
             android:contentDescription="@string/add_description"
-            app:layout_constraintTop_toTopOf="@id/name_block"
+            app:layout_constraintTop_toTopOf="@id/name"
             app:layout_constraintBottom_toBottomOf="@id/author"
             app:layout_constraintStart_toStartOf="parent"/>
-
-    <LinearLayout
-            android:id="@+id/name_block"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/albums"
-            app:layout_constraintStart_toEndOf="@id/add"
-            app:layout_constraintEnd_toStartOf="@id/more">
 
     <TextView
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:maxWidth="215dp"
+            android:singleLine="true"
+            android:ellipsize="end"
             android:text="Song name"
             android:textColor="@color/text"
             android:textSize="26sp"
-            android:layout_gravity="center_vertical"/>
+            android:layout_gravity="center_vertical"
+            app:layout_constraintStart_toEndOf="@id/add"
+            app:layout_constraintEnd_toStartOf="@id/explicit"
+            app:layout_constraintTop_toBottomOf="@id/albums"
+            app:layout_constraintHorizontal_chainStyle="packed"/>
 
     <ImageView
             android:id="@+id/explicit"
@@ -87,9 +86,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:background="@drawable/ic_explicit_28"
-            android:backgroundTint="@color/subordinate_text"/>
-
-    </LinearLayout>
+            android:backgroundTint="@color/subordinate_text"
+            app:layout_constraintStart_toEndOf="@id/name"
+            app:layout_constraintEnd_toStartOf="@id/more"
+            app:layout_constraintTop_toTopOf="@id/name"/>
 
     <TextView
             android:id="@+id/author"
@@ -99,7 +99,7 @@
             android:text="Author"
             android:textColor="@color/main"
             android:textSize="20sp"
-            app:layout_constraintTop_toBottomOf="@id/name_block"
+            app:layout_constraintTop_toBottomOf="@id/name"
             app:layout_constraintStart_toEndOf="@id/add"
             app:layout_constraintEnd_toStartOf="@id/more"/>
 
@@ -111,7 +111,7 @@
             android:background="@drawable/ic_ic_more_24dp"
             android:backgroundTint="@color/main"
             android:contentDescription="@string/menu_description"
-            app:layout_constraintTop_toTopOf="@id/name_block"
+            app:layout_constraintTop_toTopOf="@id/name"
             app:layout_constraintBottom_toBottomOf="@id/author"
             app:layout_constraintEnd_toEndOf="parent"/>
 

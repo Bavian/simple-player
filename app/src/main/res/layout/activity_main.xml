@@ -55,18 +55,18 @@
     <LinearLayout
             android:id="@+id/mini_player"
             android:layout_width="0dp"
-            android:layout_height="100dp"
+            android:layout_height="75dp"
             android:background="@color/mini_player_background"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
         <ImageView
                 android:id="@+id/album"
-                android:layout_width="65dp"
-                android:layout_height="65dp"
-                android:layout_margin="10dp"
+                android:layout_width="48.75dp"
+                android:layout_height="48.75dp"
+                android:layout_margin="7.5dp"
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/album"
                 android:contentDescription="@string/album_description"
@@ -76,16 +76,17 @@
                 android:id="@+id/name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="25"
+                android:layout_weight="5"
+                android:singleLine="true"
+                android:ellipsize="end"
                 android:layout_gravity="center_vertical"
-                android:textSize="26sp"
+                android:textSize="20sp"
                 android:textColor="@color/text"/>
 
         <TextView
                 android:id="@+id/rest_time"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="8"
                 android:layout_gravity="center_vertical"
                 android:textColor="@color/subordinate_text"
                 android:textSize="14sp"/>
@@ -95,7 +96,7 @@
                 android:onClick="pause"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="10"
+                android:layout_weight="2"
                 android:src="@drawable/ic_pause_28"
                 android:contentDescription="@string/pause_description"
                 android:background="@color/mini_player_background"/>
@@ -105,7 +106,7 @@
                 android:onClick="next"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="10"
+                android:layout_weight="2"
                 android:src="@drawable/ic_mini_player_next_28"
                 android:contentDescription="@string/next_description"
                 android:background="@color/mini_player_background"/>

@@ -110,7 +110,7 @@ class PlayerInterface : AppCompatActivity() {
                 name.text = MusicService.player?.currentCompositionName ?: "Unknown"
                 author.text = MusicService.player?.currentCompositionAuthor ?: "Anonymous"
 
-                timerHandler.postDelayed(this, 1000)
+                timerHandler.postDelayed(this, 50)
             }
 
         }

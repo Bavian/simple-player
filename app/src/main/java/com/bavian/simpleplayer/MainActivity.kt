@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity() {
 
                 name.text = MusicService.player?.currentCompositionName ?: "Unknown"
 
-                timerHandler.postDelayed(this, 1000)
+                timerHandler.postDelayed(this, 50)
             }
 
         }

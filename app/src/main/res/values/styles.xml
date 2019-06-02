@@ -5,9 +5,9 @@
         <!-- Customize your theme here. -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="colorPrimary">@color/dark_blue</item>
-        <item name="colorPrimaryDark">@color/dark_blue</item>
-        <item name="colorAccent">@color/light_blue</item>
+        <item name="colorPrimary">@color/main</item>
+        <item name="colorPrimaryDark">@color/main</item>
+        <item name="colorAccent">@color/sub</item>
     </style>
 
 

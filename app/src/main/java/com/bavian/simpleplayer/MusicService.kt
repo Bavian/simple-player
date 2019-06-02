@@ -17,7 +17,9 @@ class MusicService: Service() {
 
         val result = super.onStartCommand(intent, flags, startId)
 
-        val list = CompositionsList(intent!!.extras!!.getStringArray("paths")!!)
+        val compositions = intent?.extras?.getStringArray("paths") ?: return result
+
+        val list = CompositionsList(compositions)
 
         if (player == null) {
             player = Player(list)

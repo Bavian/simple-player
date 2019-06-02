@@ -18,7 +18,7 @@ class Player(compositions: CompositionsList) {
 
     var compositions: CompositionsList = compositions
         set(toSet) {
-            if (compositions < toSet) {
+            if (compositions.compareTo(toSet) != 0) {
                 field = toSet
                 play(0)
             }

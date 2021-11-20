@@ -12,7 +12,7 @@ import android.widget.TextView
 class MainActivity : AppCompatActivity() {
 
     private var timerHandler: Handler? = null
-    private var timerUpdater: Runnable? = null
+    private lateinit var timerUpdater: Runnable
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -13,7 +13,7 @@ import android.widget.TextView
 class PlayerInterface : AppCompatActivity() {
 
     private var timerHandler: Handler? = null
-    private var timerUpdater: Runnable? = null
+    private lateinit var timerUpdater: Runnable
     private var hasStopped = false
 
     override fun onCreate(savedInstanceState: Bundle?) {

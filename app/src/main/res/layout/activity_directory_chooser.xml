@@ -1,32 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             xmlns:tools="http://schemas.android.com/tools"
-                                             android:layout_width="match_parent"
-                                             android:layout_height="match_parent"
-                                             xmlns:app="http://schemas.android.com/apk/res-auto">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <ListView
-            android:id="@+id/directories"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
-    </ListView>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/directory_chooser_directories_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <ImageButton
-            android:id="@+id/done"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:src="@drawable/ic_done_outline_24"
-            android:contentDescription="@string/done_description"
-            android:background="@drawable/gradient_circle"
-            android:padding="15dp"
-            android:onClick="done"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-    />
+        android:id="@+id/directory_chooser_chosen_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="20dp"
+        android:background="@drawable/gradient_circle"
+        android:contentDescription="@string/done_description"
+        android:padding="15dp"
+        android:src="@drawable/ic_done_outline_24" />
 
-</android.support.constraint.ConstraintLayout>
+</FrameLayout>

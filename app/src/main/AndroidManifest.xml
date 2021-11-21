@@ -12,9 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity2"
-            android:exported="false" />
-        <activity
             android:name=".StartActivity"
             android:exported="true">
             <intent-filter>
@@ -23,7 +20,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DirectoryChooser" />
+        <activity android:name=".chooser.DirectoryChooserActivity" />
         <activity android:name=".PlayerInterface" />
 
         <service android:name=".MusicService" />

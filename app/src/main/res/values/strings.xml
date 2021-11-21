@@ -6,6 +6,11 @@
     <string name="start_screen_choose_directory_button">Выбрать папку</string>
     <string name="mini_player_unknown_track_name">Unknown</string>
 
+    <!-- Directory chooser -->
+    <string name="directory_chooser_warning">В данной директории нет .mp3 файлов</string>
+    <string-array name="supported_formats">
+        <item>.mp3</item>
+    </string-array>
     <string name="done_description">done</string>
     <string name="album_description">album</string>
     <string name="add_description">add</string>

@@ -8,6 +8,7 @@ import android.os.Looper
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.bavian.simpleplayer.chooser.DirectoryChooserActivity
 
 const val REST_TIME_UPDATE_DELAY_MILLIS = 1000L
 
@@ -56,7 +57,7 @@ class StartActivity : AppCompatActivity() {
     }
 
     private fun chooseDirectory() {
-        val intent = Intent(this, DirectoryChooser::class.java)
+        val intent = Intent(this, DirectoryChooserActivity::class.java)
         startActivity(intent)
     }
 

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_menu_background"
+    tools:context=".StartActivity">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/mini_player"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/start_screen_choose_directory_title"
+            android:textColor="#000000"
+            android:textSize="26sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:text="@string/start_screen_choose_directory_description"
+            android:textColor="@color/subordinate_text"
+            android:textSize="14sp" />
+
+        <Button android:id="@+id/choose_directory_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/gradient_rectangle"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="@string/start_screen_choose_directory_button"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF" />
+
+    </LinearLayout>
+
+    <LinearLayout android:id="@+id/mini_player"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_gravity="bottom"
+        android:background="@color/mini_player_background"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView android:id="@+id/album"
+            android:layout_width="48.75dp"
+            android:layout_height="48.75dp"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="7.5dp"
+            android:background="@drawable/gradient_rectangle"
+            android:contentDescription="@string/album_description"
+            android:src="@drawable/album" />
+
+        <TextView android:id="@+id/mini_player_track_name_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="5"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textColor="@color/text"
+            android:textSize="20sp" />
+
+        <TextView android:id="@+id/mini_player_rest_time_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/subordinate_text"
+            android:textSize="14sp" />
+
+        <ImageButton android:id="@+id/mini_player_pause_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:background="@color/mini_player_background"
+            android:contentDescription="@string/pause_description"
+            android:src="@drawable/ic_pause_28" />
+
+        <ImageButton android:id="@+id/mini_player_skip_next_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:background="@color/mini_player_background"
+            android:contentDescription="@string/next_description"
+            android:src="@drawable/ic_mini_player_next_28" />
+
+    </LinearLayout>
+
+</FrameLayout>

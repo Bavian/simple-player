@@ -1,8 +1,11 @@
 <resources>
+    <!-- Start screen -->
     <string name="app_name">SimplePlayer</string>
-    <string name="question_on_start">Откуда играть музыку?</string>
-    <string name="tip_on_start">Выберите папку с аудиозаписями</string>
-    <string name="choose_directory_button">Выбрать папку</string>
+    <string name="start_screen_choose_directory_title">Откуда играть музыку?</string>
+    <string name="start_screen_choose_directory_description">Выберите папку с аудиозаписями</string>
+    <string name="start_screen_choose_directory_button">Выбрать папку</string>
+    <string name="mini_player_unknown_track_name">Unknown</string>
+
     <string name="done_description">done</string>
     <string name="album_description">album</string>
     <string name="add_description">add</string>

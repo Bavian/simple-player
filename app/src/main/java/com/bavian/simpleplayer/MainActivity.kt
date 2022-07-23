@@ -1,7 +1,7 @@
 package com.bavian.simpleplayer
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.view.GestureDetector
@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
-        timerHandler?.removeCallbacks(timerUpdater)
+        timerHandler?.removeCallbacks(timerUpdater!!)
     }
 
     fun chooseDirectory(view: View) {

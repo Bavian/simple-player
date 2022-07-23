@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
-        timerHandler?.removeCallbacks(timerUpdater)
+        timerHandler?.removeCallbacks(timerUpdater!!)
     }
 
     fun chooseDirectory(view: View) {

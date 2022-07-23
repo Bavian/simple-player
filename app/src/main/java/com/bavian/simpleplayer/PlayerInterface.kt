@@ -60,7 +60,7 @@ class PlayerInterface : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
         hasStopped = true
-        timerHandler?.removeCallbacks(timerUpdater)
+        timerHandler?.removeCallbacks(timerUpdater!!)
     }
 
     fun play(view: View) {

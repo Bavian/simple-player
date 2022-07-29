@@ -4,29 +4,18 @@ import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 import com.bavian.simpleplayer.player.Player
-import com.bavian.simpleplayer.player.compositions.CompositionsList
+import org.koin.android.ext.android.inject
 
 class MusicService: Service() {
 
-    companion object {
-        var player: Player? = null
-            private set
-    }
+    private val compositions = ArrayList<String>()
+    private val player: Player by inject()
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-
         val result = super.onStartCommand(intent, flags, startId)
 
-        val compositions = intent?.extras?.getStringArray("paths") ?: return result
-
-        val list = CompositionsList(compositions)
-
-        if (player == null) {
-            player = Player(list)
-            player!!.play(0)
-        } else {
-            player!!.compositions = list
-        }
+        compositions.addAll(intent?.extras?.getStringArray("paths") ?: return result)
+        player.compositions = compositions
 
         return result
     }
@@ -37,7 +26,7 @@ class MusicService: Service() {
 
     override fun onDestroy() {
         super.onDestroy()
-        player?.off()
+        player.off()
     }
 
 }

@@ -9,12 +9,16 @@ import android.view.View
 import android.widget.ImageButton
 import android.widget.SeekBar
 import android.widget.TextView
+import com.bavian.simpleplayer.player.Player
+import org.koin.android.ext.android.inject
 
 class PlayerInterface : AppCompatActivity() {
 
     private var timerHandler: Handler? = null
     private var timerUpdater: Runnable? = null
     private var hasStopped = false
+
+    private val player: Player by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +31,7 @@ class PlayerInterface : AppCompatActivity() {
 
         setContentView(R.layout.player)
 
-        if (MusicService.player?.isPlaying() != true && savedInstanceState != null) {
+        if (!player.isPlaying() && savedInstanceState != null) {
             findViewById<ImageButton>(R.id.play).setImageResource(R.drawable.ic_play_48)
         }
 
@@ -45,7 +49,7 @@ class PlayerInterface : AppCompatActivity() {
 
             val button = findViewById<ImageButton>(R.id.play)
 
-            if (MusicService.player?.isPlaying() != true) {
+            if (!player.isPlaying()) {
                 button.setImageResource(R.drawable.ic_play_48)
             } else {
                 button.setImageResource(R.drawable.ic_pause_48)
@@ -67,22 +71,22 @@ class PlayerInterface : AppCompatActivity() {
 
         val button = findViewById<ImageButton>(R.id.play)
 
-        if (MusicService.player!!.isPlaying()) {
+        if (player.isPlaying()) {
 
             button.setImageResource(R.drawable.ic_play_48)
-            MusicService.player!!.pause()
+            player.pause()
 
         } else {
 
             button.setImageResource(R.drawable.ic_pause_48)
-            MusicService.player!!.play()
+            player.play()
 
         }
 
     }
 
-    fun next(view: View) = MusicService.player!!.next()
-    fun previous(view: View) = MusicService.player!!.previous()
+    fun next(view: View) = player.next()
+    fun previous(view: View) = player.previous()
 
     private fun launchSeekBarAnalyser() {
 
@@ -97,18 +101,18 @@ class PlayerInterface : AppCompatActivity() {
         val timerUpdater = object : Runnable {
 
             override fun run() {
-                seekBar.max = MusicService.player?.duration ?: 0
-                val progress = MusicService.player?.progress
-                val duration = MusicService.player?.duration
+                seekBar.max = player.duration
+                val progress = player.progress
+                val duration = player.duration
 
-                val restTime = "-${getTimer(duration?.minus(progress ?: 0))}"
+                val restTime = "-${getTimer(duration.minus(progress))}"
 
                 seekBar.progress = progress ?: 0
                 leftTimer.text = getTimer(progress)
                 rightTimer.text = restTime
 
-                name.text = MusicService.player?.currentCompositionName ?: "Unknown"
-                author.text = MusicService.player?.currentCompositionAuthor ?: "Anonymous"
+                name.text = player.currentCompositionName ?: "Unknown"
+                author.text = player.currentCompositionAuthor ?: "Anonymous"
 
                 timerHandler.postDelayed(this, 50)
             }
@@ -132,7 +136,7 @@ class PlayerInterface : AppCompatActivity() {
 
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 if (fromUser) {
-                    MusicService.player?.progress = progress
+                    player.progress = progress
                 }
             }
 

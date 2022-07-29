@@ -8,11 +8,15 @@ import android.view.GestureDetector
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.bavian.simpleplayer.player.Player
+import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
 
     private var timerHandler: Handler? = null
     private var timerUpdater: Runnable? = null
+
+    private val player: Player by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +30,7 @@ class MainActivity : AppCompatActivity() {
 
         val miniPlayer = findViewById<LinearLayout>(R.id.mini_player)
 
-        if (MusicService.player?.isPlaying() == true) {
+        if (player.isPlaying()) {
             miniPlayer.visibility = View.VISIBLE
         } else {
             miniPlayer.visibility = View.GONE
@@ -46,12 +50,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun pause(view: View) {
-        MusicService.player?.pause()
+        player.pause()
         findViewById<LinearLayout>(R.id.mini_player).visibility = View.GONE
     }
 
     fun next(view: View) {
-        MusicService.player?.next()
+        player.next()
     }
 
     private fun launchCompositionAnalyser() {
@@ -64,13 +68,13 @@ class MainActivity : AppCompatActivity() {
         val timerUpdater = object : Runnable {
 
             override fun run() {
-                val progress = MusicService.player?.progress
-                val duration = MusicService.player?.duration
+                val progress = player.progress
+                val duration = player.duration
 
                 val restTime = "-${getTimer(duration?.minus(progress ?: 0))}"
                 timer.text = restTime
 
-                name.text = MusicService.player?.currentCompositionName ?: "Unknown"
+                name.text = player.currentCompositionName ?: "Unknown"
 
                 timerHandler.postDelayed(this, 50)
             }

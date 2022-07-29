@@ -2,10 +2,9 @@ package com.bavian.simpleplayer.player
 
 import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
-import com.bavian.simpleplayer.player.compositions.CompositionsList
 import kotlin.random.Random
 
-class Player(compositions: CompositionsList) {
+class Player {
 
     private val mediaPlayer = MediaPlayer()
     private val data = MediaMetadataRetriever()
@@ -16,50 +15,47 @@ class Player(compositions: CompositionsList) {
     var duration: Int = 0
         private set
 
-    var compositions: CompositionsList = compositions
-        set(toSet) {
-            if (compositions.compareTo(toSet) != 0) {
-                field = toSet
+    var compositions = ArrayList<String>()
+        set(value) {
+            if (compositions != value) {
+                field = value
                 play(0)
             }
         }
 
     init {
-        synchronized(mediaPlayer) {
 
-            mediaPlayer.setOnPreparedListener { mp ->
-                mp.start()
-                duration = mp.duration
-            }
+        mediaPlayer.setOnPreparedListener { mp ->
+            mp.start()
+            duration = mp.duration
+        }
 
-            mediaPlayer.setOnCompletionListener {
+        mediaPlayer.setOnCompletionListener {
 
-                if (isShuffle) {
-                    play(Random.nextInt(0, compositions.size))
+            if (isShuffle) {
+                play(Random.nextInt(0, compositions.size))
+            } else {
+
+                if (current + 1 == compositions.size && !isRepeat) {
+                    pause()
                 } else {
-
-                    if (current + 1 == compositions.size && !isRepeat) {
-                        pause()
-                    } else {
-                        next()
-                    }
+                    next()
                 }
-
             }
+
         }
     }
 
     fun play(index: Int) {
+        if (compositions.isEmpty()) return
 
         current = (compositions.size + index) % compositions.size
 
-        synchronized(mediaPlayer) {
-            mediaPlayer.reset()
-            mediaPlayer.setDataSource(compositions.get(current))
-            mediaPlayer.prepareAsync()
+        mediaPlayer.reset()
+        mediaPlayer.setDataSource(compositions.get(current))
+        mediaPlayer.prepareAsync()
 
-            data.setDataSource(compositions.get(current))
-        }
+        data.setDataSource(compositions.get(current))
     }
 
     fun next() {
@@ -71,15 +67,11 @@ class Player(compositions: CompositionsList) {
     }
 
     fun play() {
-        synchronized(mediaPlayer) {
-            mediaPlayer.start()
-        }
+        mediaPlayer.start()
     }
 
     fun pause() {
-        synchronized(mediaPlayer) {
-            mediaPlayer.pause()
-        }
+        mediaPlayer.pause()
     }
 
     fun isPlaying() = mediaPlayer.isPlaying
@@ -87,15 +79,11 @@ class Player(compositions: CompositionsList) {
     var progress: Int
         get() = mediaPlayer.currentPosition
         set(toSet) {
-            synchronized(mediaPlayer) {
-                mediaPlayer.seekTo(toSet)
-            }
+            mediaPlayer.seekTo(toSet)
         }
 
     fun off() {
-        synchronized(mediaPlayer) {
-            mediaPlayer.release()
-        }
+        mediaPlayer.release()
     }
 
     val currentCompositionName: String?

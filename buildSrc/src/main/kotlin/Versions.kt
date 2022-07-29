@@ -1,7 +1,11 @@
 object Versions {
     const val gradle = "7.2.1"
-    const val kotlin = "1.7.10"
     const val junit = "4.12"
+
+    object Kotlin {
+        const val lang = "1.7.10"
+        const val koin = "3.2.0"
+    }
 
     object AndroidX {
         const val appCompat = "1.4.2"

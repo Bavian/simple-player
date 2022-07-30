@@ -1,4 +1,4 @@
-package com.bavian.simpleplayer.player
+package com.bavian.player
 
 import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer

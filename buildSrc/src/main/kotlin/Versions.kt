@@ -1,6 +1,7 @@
 object Versions {
     const val gradle = "7.2.1"
     const val junit = "4.12"
+    const val exoPlayer = "2.18.1"
 
     object Kotlin {
         const val lang = "1.7.10"

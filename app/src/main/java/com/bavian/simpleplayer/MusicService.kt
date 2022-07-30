@@ -3,7 +3,7 @@ package com.bavian.simpleplayer
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-import com.bavian.simpleplayer.player.Player
+import com.bavian.player.Player
 import org.koin.android.ext.android.inject
 
 class MusicService: Service() {

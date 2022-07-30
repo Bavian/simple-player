@@ -8,7 +8,7 @@ import android.view.GestureDetector
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.bavian.simpleplayer.player.Player
+import com.bavian.player.Player
 import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {

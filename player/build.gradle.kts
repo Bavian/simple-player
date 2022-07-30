@@ -34,4 +34,5 @@ android {
 
 dependencies {
     implementation("io.insert-koin:koin-android:${Versions.Kotlin.koin}")
+    implementation("com.google.android.exoplayer:exoplayer-core:${Versions.exoPlayer}")
 }

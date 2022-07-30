@@ -1,6 +1,6 @@
 package com.bavian.simpleplayer
 
-fun getTimer(time: Int?): String {
+fun getTimer(time: Long?): String {
 
     if (time == null) {
         return "0:00"

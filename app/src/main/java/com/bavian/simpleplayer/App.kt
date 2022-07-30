@@ -1,6 +1,7 @@
 package com.bavian.simpleplayer
 
 import android.app.Application
+import com.bavian.player.musicMusicPlayerModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -12,7 +13,10 @@ class App : Application() {
         startKoin {
             androidLogger()
             androidContext(this@App)
-            modules(KoinModules.musicPlayerModule)
+            modules(
+                musicMusicPlayerModule,
+                HandlersModule.handlersModule,
+            )
         }
     }
 

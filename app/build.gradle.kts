@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    compileSdkVersion(33)
+    compileSdk = Versions.Android.compileSdk
     defaultConfig {
         applicationId = "com.bavian.simpleplayer"
-        minSdkVersion(21)
-        targetSdkVersion(33)
+        minSdk = Versions.Android.minSdk
+        targetSdk = Versions.Android.targetSdk
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
